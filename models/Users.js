@@ -15,7 +15,7 @@ const userSchema = mongooseSchema(
       type: String,
       required: [true, "El nombre es requerido para el registro"],
     },
-    lastName: {
+    LastName: {
       type: String,
       required: [true, "El apellido es requerido para el registro"],
     },
@@ -35,17 +35,17 @@ const userSchema = mongooseSchema(
       type: String,
       required: [true, "La ciudad es requerida para el registro"],
     },
-    deletedAt: {
+    DeletedAt: {
       type: Date,
       default: null,
     },
-    typeUser: {
+    TypeUser: {
       type: mongoose.Types.ObjectId,
       ref: "TypeUser",
     },
   },
   {
-    timestamp: true,
+    Timestamp: true,
   }
 );
 userSchema.pre("save", async function (next) {
