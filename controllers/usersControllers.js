@@ -1,8 +1,8 @@
-import User from "../models/Users";
+import User from "../models/Users.js";
 
 async function getAll(req, res) {
   try {
-    const user = await User.find({ deletadAt: null });
+    const users = await User.find({ deletedAt: null });
     return res.json(users);
   } catch (error) {
     console.log(error);
@@ -12,8 +12,8 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
   try {
-    const user = await User.findById(req.params.id);
-    return res.json(user);
+    const users = await User.findById(req.params.id);
+    return res.json(users);
   } catch (error) {
     console.log(error);
     return res.status(404).json("Usuario no encontrado");
@@ -21,7 +21,7 @@ async function getById(req, res) {
 }
 async function create(req, res) {
   try {
-    const newUser = user.create({
+    const newUser = User.create({
       userName: req.body.userName,
       Password: req.body.Password,
       Name: req.body.Name,
@@ -32,9 +32,9 @@ async function create(req, res) {
       City: req.body.City,
       TypeUser: req.body.TypeUser,
     });
-    return res.status(201).json(newUser);
+    return res.status(201).json("usuario creado con exito");
   } catch (error) {
-    console.log(error.errors.name.propierties.message);
+    console.log(error.message || error);
     return res.status(501).json("Error en el servidor");
   }
 }
@@ -61,6 +61,7 @@ async function update(req, res) {
       userToUpdate.Phone = Phone || userToUpdate.Phone;
       userToUpdate.Email = Email || userToUpdate.Email;
       userToUpdate.Country = Country || userToUpdate.Country;
+      userToUpdate.City = City || userToUpdate.City;
       userToUpdate.userName = userName || userToUpdate.userName;
 
       userToUpdate.TypeUser = TypeUser || userToUpdate.TypeUser;
@@ -80,26 +81,30 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try {
-    const userToDelate = await user.findById(req.params.id);
-    if (userToDelate) {
-      userToDelate.deletadAt = Date.now();
-      userToDelate.save();
-
-      return res.json("Usuario creado con exito");
+    const userToDelete = await User.findById(req.params.id);
+    if (!userToDelete) {
+      console.log("Usuario no encontrado");
+      return res.status(404).json("El usuario no existe con este id");
     }
-  } catch (err) {
-    console.log(err);
+
+    userToDelete.deletedAt = Date.now();
+    await userToDelete.save();
+
+    return res.json("Usuario eliminado con éxito");
+  } catch (error) {
+    console.error(error);
     return res
-      .status(404)
+      .status(500)
       .json(
-        "Hubo algun error al intentar eliminar el usuario, vuelve a intentarlo"
+        "Hubo algún error al intentar eliminar el usuario, vuelve a intentarlo"
       );
   }
 }
- export default {
-    getAll: getAll,
-    getById: getById,
-    create: create,
-    update: update,
-    destroy: destroy,
- }
+
+export default {
+  getAll: getAll,
+  getById: getById,
+  create: create,
+  update: update,
+  destroy: destroy,
+};

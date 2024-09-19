@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { Timestamp } from "bson";
-const userSchema = mongooseSchema(
+const userSchema = mongoose.Schema(
   {
     userName: {
       type: String,
@@ -35,22 +35,22 @@ const userSchema = mongooseSchema(
       type: String,
       required: [true, "La ciudad es requerida para el registro"],
     },
-    DeletedAt: {
+    deletedAt: {
       type: Date,
       default: null,
     },
-    TypeUser: {
+    Membership: {
       type: mongoose.Types.ObjectId,
-      ref: "TypeUser",
+      ref: "Membership",
     },
   },
   {
-    Timestamp: true,
+    timestamps: true,
   }
 );
 userSchema.pre("save", async function (next) {
-  const passwordHash = await bycrpt.hash(this.password, 10);
-  this.password = passwordHash;
+  const passwordHash = await bcrypt.hash(this.Password, 10);
+  this.Password = passwordHash;
   next();
 });
 

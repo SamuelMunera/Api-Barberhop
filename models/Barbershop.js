@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const barbershopSchema = mongooseSchema({
+const barbershopSchema = mongoose.Schema({
   nameBarbershop: {
     type: String,
     require: [
@@ -36,6 +36,13 @@ const barbershopSchema = mongooseSchema({
       "Necesitamos saber el numero telefonico de la barbershop para continuar con el registro",
     ],
   },
+  Email: {
+    type: String,
+    require: [
+      true,
+      "Necesitamos saber el correo corporativo de la barbershop para continuar con el registro",
+    ],
+  },
   Schundles: {
     type: String,
     require: [
@@ -43,4 +50,10 @@ const barbershopSchema = mongooseSchema({
       "Necesitamos saber el horario de tu barbershop para continuar con el registro",
     ],
   },
+  deletedAt: {
+    type: Date,
+    default: null,
+  },
 });
+const Barbershop = mongoose.model("Barbershop", barbershopSchema);
+export default Barbershop;
