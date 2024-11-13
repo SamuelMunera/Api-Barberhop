@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/Database.js";
 import userRoutes from "./Routes/usersRoutes.js";
+import serviceRoutes from "./Routes/serviceRoutes.js"
 
 const app = express();
 const port = 3000;
@@ -12,7 +13,7 @@ connectDB();
 
 //Routes
 app.use(userRoutes)
-
+app.use(serviceRoutes)
 
 
 

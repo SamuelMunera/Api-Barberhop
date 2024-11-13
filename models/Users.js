@@ -3,6 +3,10 @@ import bcrypt from "bcryptjs";
 import { Timestamp } from "bson";
 const userSchema = mongoose.Schema(
   {
+    typeUser:{
+      type: mongoose.Types.ObjectId,
+    ref: "userType",
+    },
     userName: {
       type: String,
       required: [true, "El nombre de usuario es requerido para el registro"],
@@ -38,10 +42,6 @@ const userSchema = mongoose.Schema(
     deletedAt: {
       type: Date,
       default: null,
-    },
-    Membership: {
-      type: mongoose.Types.ObjectId,
-      ref: "Membership",
     },
   },
   {

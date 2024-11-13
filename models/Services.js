@@ -19,9 +19,10 @@ const servicesSchema = mongoose.Schema({
     type: String,
     require: [false],
   },
-  barbershopServices: {
-    type: mongoose.Types.ObjectId,
-    ref: "Barbershop",
+ 
+  deletedAt: {
+    type: Date,
+    default: null,
   },
 });
 const Service = mongoose.model("Services", servicesSchema);

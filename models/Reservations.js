@@ -23,10 +23,7 @@ const reservationsSchema = mongoose.Schema({
       "Si necesitas poner alguna informacion adicional seria importante que la dejes aqui",
     ],
   },
-  Barbershop: {
-    type: mongoose.Types.ObjectId,
-    ref: "Barberhop",
-  },
+  
   Services: {
     type: mongoose.Types.ObjectId,
     ref: "Services",

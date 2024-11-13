@@ -92,7 +92,7 @@ async function destroy(req, res) {
 
     return res.json("Usuario eliminado con éxito");
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res
       .status(500)
       .json(
